@@ -40,5 +40,5 @@ Some example uses:
 
     To get the logs from yesterday to today during 0800 - 1700:
 
-        ./otc_log_scraper.py --hours-from 8 --hours-to 17
+        ./otc_log_scraper.py --days 1 --hours-from 8 --hours-to 17
 
