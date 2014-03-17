@@ -219,8 +219,12 @@ if __name__ == '__main__':
     # Check if args.date was passed in
     if type(args.date) == str:
         date = datetime.strptime(args.date, '%Y/%m/%d') 
-        if date > datetime.utcnow(): 
-            quit('[Error]: Cannot have a date past today')
+    else:
+        date = args.date
+
+    # Make sure the date is set correctly
+    if date > datetime.utcnow(): 
+        quit('[Error]: Cannot have a date past today')
 
     # Figure out how to call the get_logs function
     start_date = date if not args.date_from else df
