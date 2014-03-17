@@ -11,10 +11,10 @@ Caveat: All dates and times given to the script MUST be in UTC.
 
 This script requires Python 2.7 and several 3rd party libraries:
 
-    -- BeautifulSoup4   (for HTML scraping)
-    -- dateutil         (for parsing strings containing dates
-                        and converting them into datetime objects)
-    -- requests         (for speaking HTTP)
+    BeautifulSoup4   (for HTML scraping)
+    dateutil         (for parsing strings containing dates and
+                      converting them into datetime objects)
+    requests         (for speaking HTTP)
 
 Some example uses:
 
