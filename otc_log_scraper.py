@@ -243,8 +243,11 @@ if __name__ == '__main__':
         logs.extend(get_logs(days, start_time, end_time))
 
     # Finally, write logs to specified output file
-    longest_nick = max(map(len, map(lambda x: x[1], logs)))
-    args.output.write((''.join(map(lambda x: \
-                            '{} {:<{}} | {}'.format(x[0].encode('utf-8'), 
-                    x[1].encode('utf-8'), longest_nick, x[2].encode('utf-8')),
-                                logs))))
+    longest_nick = max(map(len, map(lambda x: x[1], logs))) # For formatting
+    args.output.write((''.join(map( lambda x: \
+                                        '{} {:<{}} | {}'.\
+                                            format(\
+                                    x[0].encode('utf-8'), x[1].encode('utf-8'),
+                                    longest_nick, x[2].encode('utf-8'))
+                                  ,
+                                    logs))))
