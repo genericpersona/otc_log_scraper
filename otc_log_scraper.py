@@ -92,6 +92,7 @@ def parse_args():
     parser = argparse.ArgumentParser( description=description
                                     , formatter_class=\
                                         argparse.RawTextHelpFormatter
+                                    , epilog='All dates MUST be given in UTC'
                                     )
 
     # Create arguments
@@ -178,6 +179,9 @@ def daterange(start_date, end_date):
     datetime objects within particular
     range of dates.
 
+    This is an inclusive iterator for
+    both endpoints.
+
     Yield one day at a time.
 
     Code taken from:
@@ -186,7 +190,7 @@ def daterange(start_date, end_date):
     if start_date == end_date:
         yield start_date
     else:
-        for n in range(int((end_date - start_date).days)):
+        for n in range(int((end_date - start_date).days) + 1):
             yield start_date + timedelta(n)
     
 #------------------------------------------------#
@@ -208,8 +212,9 @@ if __name__ == '__main__':
         df = parse(args.date_from)
         dt = parse(args.date_to)
 
+        # See if date-from is after date-to
         if df > dt:
-            quit('[Error]: --date-to cannot be before --date-to')
+            quit('[Error]: --date-to cannot be before --date-from')
 
         if df > datetime.utcnow():
             quit('[Error]: --date-from cannot be before today')
@@ -239,8 +244,8 @@ if __name__ == '__main__':
     # Get the logs for the range specified
     logs = []
     for day in daterange(start_date, end_date):
-        days = day.strftime('%Y/%m/%d')
-        logs.extend(get_logs(days, start_time, end_time))
+        daystr = day.strftime('%Y/%m/%d')
+        logs.extend(get_logs(daystr, start_time, end_time))
 
     # Finally, write logs to specified output file
     longest_nick = max(map(len, map(lambda x: x[1], logs))) # For formatting
