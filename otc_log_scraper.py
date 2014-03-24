@@ -92,7 +92,10 @@ def parse_args():
     parser = argparse.ArgumentParser( description=description
                                     , formatter_class=\
                                         argparse.RawTextHelpFormatter
-                                    , epilog='All dates MUST be given in UTC'
+                                    , epilog='All dates MUST be given in ' + \
+                                    'UTC.\n\nDates for --date-from and ' + \
+                                    '--date-to\ncan be given in any ' + \
+                                    'typical format, e.g.,\nMM/DD/YYYY'
                                     )
 
     # Create arguments
