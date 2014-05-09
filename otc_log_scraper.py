@@ -95,7 +95,9 @@ def parse_args():
                                     , epilog='All dates MUST be given in ' + \
                                     'UTC.\n\nDates for --date-from and ' + \
                                     '--date-to\ncan be given in any ' + \
-                                    'typical format, e.g.,\nMM/DD/YYYY'
+                                    'typical format, e.g.,\nMM/DD/YYYY\n\n' + \
+                                    'Without args the current day\'s\n' + \
+                                    'logs will be output to stdout.'
                                     )
 
     # Create arguments
@@ -250,12 +252,19 @@ if __name__ == '__main__':
         daystr = day.strftime('%Y/%m/%d')
         logs.extend(get_logs(daystr, start_time, end_time))
 
+    # Clear out logs of any garbage to prevent
+    # the accidental inclusion of None values
+    logs = filter(lambda x: all(x), logs)
+
     # Finally, write logs to specified output file
-    longest_nick = max(map(len, map(lambda x: x[1], logs))) # For formatting
+    names = map(lambda x: x[1], logs)
+    longest_nick = max(map(len, names))
     args.output.write((''.join(map( lambda x: \
                                         '{} {:<{}} | {}'.\
                                             format(\
-                                    x[0].encode('utf-8'), x[1].encode('utf-8'),
-                                    longest_nick, x[2].encode('utf-8'))
+                                x[0].encode('utf-8'), 
+                                x[1].encode('utf-8'),
+                                longest_nick, 
+                                x[2].encode('utf-8'))
                                   ,
                                     logs))))
